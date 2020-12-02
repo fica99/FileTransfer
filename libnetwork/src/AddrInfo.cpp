@@ -1,9 +1,9 @@
-#include "SocketCreator.h"
+#include "AddrInfo.h"
 
 using namespace	std;
 
-AddrInfoGetter::AddrInfoGetter(const char *ip_addr, const char *serv_port, int socktype) {
-	int							rv;
+AddrInfo::AddrInfo(const char *ip_addr, const char *serv_port, int socktype) {
+	int				rv;
 	struct addrinfo	hints;
 
 	memset((void*)&hints, 0, sizeof(hints));
@@ -11,7 +11,7 @@ AddrInfoGetter::AddrInfoGetter(const char *ip_addr, const char *serv_port, int s
 	hints.ai_socktype = socktype;
 	if (!ip_addr)
 		hints.ai_flags = AI_PASSIVE;
-	rv = getaddrinfo(ip_addr, serv_port, hints, &serv_info_);
+	rv = getaddrinfo(ip_addr, serv_port, &hints, &serv_info_);
 	if (rv != 0) {
 		stringstream ss;
 
@@ -20,6 +20,10 @@ AddrInfoGetter::AddrInfoGetter(const char *ip_addr, const char *serv_port, int s
 	}
 }
 
-AddrInfoGetter::~AddrInfoGetter(void) {
+const struct addrinfo *AddrInfo::getAddrInfo() const {
+	return serv_info_;
+}
+
+AddrInfo::~AddrInfo(void) {
 	freeaddrinfo(serv_info_);
 }

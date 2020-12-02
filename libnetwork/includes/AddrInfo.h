@@ -7,10 +7,11 @@
 #include <sstream>
 #include <cstring>
 
-class AddrInfoGetter {
+class AddrInfo {
 public:
-	AddrInfoGetter(const char *ip_addr, const char *serv_port, int socktype);
-	~AddrInfoGetter(void);
+	AddrInfo(const char *ip_addr, const char *serv_port, int socktype);
+	~AddrInfo(void);
+	const struct addrinfo *getAddrInfo() const;
 private:
 	struct addrinfo	*serv_info_;
 };
