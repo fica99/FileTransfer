@@ -9,6 +9,8 @@ OBJ_DIR	=		objs
 # ------------  SOURCE FILES  ------------------------------------------------ #
 SRC_FLS	=		AddrInfo.cpp\
 						Socket.cpp\
+						Error.cpp\
+						Bind.cpp\
 
 
 # ------------  FILEPATHS  --------------------------------------------------- #

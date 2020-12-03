@@ -3,20 +3,27 @@
 using namespace	std;
 
 Socket::Socket(AddrInfo addr_info) : addr_info_(move(addr_info)) {
-	const struct addrinfo	*p;
-	int										socket_fd;
+	info_ = nullptr;
+	createSocket();
+}
 
-	p = addr_info_.getAddrInfo();
-	while (p) {
-		socket_fd = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
-		if (socket_fd != -1)
-			break ;
-		p = p->ai_next;
+void	Socket::createSocket(void) {
+	if (!info_)
+		info_ = addr_info_.getAddrInfo();
+	else {
+		closeSocket();
+		info_ = info_->ai_next;
 	}
-	if (!p)
-		throw invalid_argument("Failed to get socket file descriptor");
-	info_ = p;
-	socket_fd_ = socket_fd;
+	while (info_) {
+		socket_fd_ = socket(info_->ai_family, info_->ai_socktype,
+									info_->ai_protocol);
+		if (socket_fd_ != -1)
+			break ;
+		info_ = info_->ai_next;
+	}
+	if (!info_)
+		Error{"Failed to get socket file descriptor"};
+
 }
 
 int	Socket::getSocketFd(void) const {
@@ -43,6 +50,10 @@ Socket& Socket::operator=(Socket&& other) {
 	return *this;
 }
 
-Socket::~Socket() {
+void	Socket::closeSocket(void) const {
 	close(socket_fd_);
+}
+
+Socket::~Socket() {
+	closeSocket();
 }

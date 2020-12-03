@@ -1,10 +1,11 @@
 #pragma once
 
-#include "AddrInfo.h"
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <stdexcept>
 #include <unistd.h>
+#include "Error.h"
+#include "AddrInfo.h"
+
 
 class Socket {
 public:
@@ -15,8 +16,10 @@ public:
 	Socket& 							operator=(const Socket& other) = delete;
 	int										getSocketFd(void) const;
 	const struct addrinfo *getSocketInfo(void) const;
+	void									createSocket(void);
 	~Socket();
 private:
+	void									closeSocket(void) const;
 	AddrInfo							addr_info_;
 	int										socket_fd_;
 	const struct addrinfo	*info_;

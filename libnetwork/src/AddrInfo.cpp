@@ -3,7 +3,7 @@
 using namespace	std;
 
 AddrInfo::AddrInfo(const char *ip_addr, const char *serv_port, int socktype) {
-	int				rv;
+	int							rv;
 	struct addrinfo	hints;
 
 	memset((void*)&hints, 0, sizeof(hints));
@@ -16,7 +16,7 @@ AddrInfo::AddrInfo(const char *ip_addr, const char *serv_port, int socktype) {
 		stringstream ss;
 
 		ss << "getaddrinfo: " << gai_strerror(rv);
-		throw invalid_argument(ss.str());
+		Error{ss.str()};
 	}
 }
 

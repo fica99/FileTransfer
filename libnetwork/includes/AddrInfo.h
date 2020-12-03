@@ -3,9 +3,9 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
-#include <stdexcept>
 #include <sstream>
 #include <cstring>
+#include "Error.h"
 
 class AddrInfo {
 public:
