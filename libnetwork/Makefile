@@ -7,7 +7,8 @@ OBJ_DIR	=		objs
 
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
-SRC_FLS	=		AddrInfo.cpp
+SRC_FLS	=		AddrInfo.cpp\
+						Socket.cpp\
 
 
 # ------------  FILEPATHS  --------------------------------------------------- #

@@ -10,6 +10,10 @@
 class AddrInfo {
 public:
 	AddrInfo(const char *ip_addr, const char *serv_port, int socktype);
+	AddrInfo(const AddrInfo& other) = delete;
+	AddrInfo(AddrInfo&& other);
+	AddrInfo& operator=(const AddrInfo& other) = delete;
+	AddrInfo& operator=(AddrInfo&& other);
 	~AddrInfo(void);
 	const struct addrinfo *getAddrInfo() const;
 private:

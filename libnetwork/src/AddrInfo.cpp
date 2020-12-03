@@ -24,6 +24,17 @@ const struct addrinfo *AddrInfo::getAddrInfo() const {
 	return serv_info_;
 }
 
+AddrInfo::AddrInfo(AddrInfo&& other) {
+	serv_info_ = other.serv_info_;
+	other.serv_info_ = nullptr;
+}
+
+AddrInfo&	AddrInfo::operator=(AddrInfo&& other) {
+	serv_info_ = other.serv_info_;
+	other.serv_info_ = nullptr;
+	return *this;
+}
+
 AddrInfo::~AddrInfo(void) {
 	freeaddrinfo(serv_info_);
 }
