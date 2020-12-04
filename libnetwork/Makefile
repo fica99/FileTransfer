@@ -11,6 +11,7 @@ SRC_FLS	=		AddrInfo.cpp\
 						Socket.cpp\
 						Error.cpp\
 						Bind.cpp\
+						Send.cpp\
 
 
 # ------------  FILEPATHS  --------------------------------------------------- #

@@ -2,7 +2,7 @@
 
 using namespace	std;
 
-Error::Error(const char *msg) {
+void Error::error(const char *msg) {
 	if (errno)
 		perror(msg);
 	else
@@ -10,6 +10,6 @@ Error::Error(const char *msg) {
 	exit(EXIT_FAILURE);
 }
 
-Error::Error(const string &msg) {
-	Error(msg.c_str());
+void Error::error(const string &msg) {
+	error(msg.c_str());
 }

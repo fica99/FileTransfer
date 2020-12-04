@@ -2,12 +2,14 @@
 
 using namespace	std;
 
-Socket::Socket(AddrInfo addr_info) : addr_info_(move(addr_info)) {
-	info_ = nullptr;
-	createSocket();
+Socket::Socket(AddrInfo addr_info) : addr_info_(move(addr_info)),
+																		socket_fd_(0),
+																		info_(nullptr),
+																		is_closed_(true) {
+	updateSocket();
 }
 
-void	Socket::createSocket(void) {
+int	Socket::updateSocket(void) {
 	if (!info_)
 		info_ = addr_info_.getAddrInfo();
 	else {
@@ -17,13 +19,15 @@ void	Socket::createSocket(void) {
 	while (info_) {
 		socket_fd_ = socket(info_->ai_family, info_->ai_socktype,
 									info_->ai_protocol);
-		if (socket_fd_ != -1)
+		if (socket_fd_ != -1) {
+			is_closed_ = false;
 			break ;
+		}
 		info_ = info_->ai_next;
 	}
 	if (!info_)
-		Error{"Failed to get socket file descriptor"};
-
+		ERROR("Failed to get socket file descriptor");
+	return socket_fd_;
 }
 
 int	Socket::getSocketFd(void) const {
@@ -36,7 +40,8 @@ const struct addrinfo *Socket::getSocketInfo(void) const {
 
 Socket::Socket(Socket&& other) : addr_info_ (move(other.addr_info_)),
 																socket_fd_(other.socket_fd_),
-																info_(move(other.info_)) {
+																info_(move(other.info_)),
+																is_closed_(other.is_closed_) {
 	other.info_ = nullptr;
 }
 
@@ -47,11 +52,17 @@ Socket& Socket::operator=(Socket&& other) {
 	socket_fd_ = other.socket_fd_;
 	info_ = move(other.info_);
 	other.info_ = nullptr;
+	is_closed_ = other.is_closed_;
 	return *this;
 }
 
-void	Socket::closeSocket(void) const {
+void	Socket::closeSocket(void) {
 	close(socket_fd_);
+	is_closed_ = true;
+}
+
+bool	Socket::isClosed(void) const {
+	return is_closed_;
 }
 
 Socket::~Socket() {

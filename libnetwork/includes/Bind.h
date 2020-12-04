@@ -7,5 +7,5 @@
 
 class Bind {
 public:
-	Bind(Socket& sock);
+	static void	binding(Socket& sock);
 };
