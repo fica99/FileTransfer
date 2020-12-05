@@ -2,10 +2,10 @@
 
 using namespace	std;
 
-int	Send::sending(const Socket& sock, const char *msg, size_t len) {
+size_t	Send::sending(const Socket& sock, const void *msg, size_t len) {
 	const struct addrinfo	*info = sock.getSocketInfo();
 	int										fd = sock.getSocketFd();
-	int										sended;
+	size_t								sended;
 	int										size;
 
 	sended = 0;
@@ -18,10 +18,8 @@ int	Send::sending(const Socket& sock, const char *msg, size_t len) {
 	return sended;
 }
 
-int	Send::sending(const Socket& sock, string msg) {
-	return sending(sock, msg.c_str(), msg.size());
-}
-
-int	Send::sending(const Socket& sock, const string& msg) {
-	return sending(sock, msg.c_str(), msg.size());
+size_t	Send::sending(const Socket& sock, const IDatagram& datagram) {
+	auto data = datagram.getDatagram();
+	auto size = datagram.getDatagramSize();
+	return sending(sock, static_cast<void*>(data.get()), size);
 }

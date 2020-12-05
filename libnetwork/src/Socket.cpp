@@ -4,8 +4,7 @@ using namespace	std;
 
 Socket::Socket(AddrInfo addr_info) : addr_info_(move(addr_info)),
 																		socket_fd_(0),
-																		info_(nullptr),
-																		is_closed_(true) {
+																		info_(nullptr) {
 	updateSocket();
 }
 
@@ -19,10 +18,8 @@ int	Socket::updateSocket(void) {
 	while (info_) {
 		socket_fd_ = socket(info_->ai_family, info_->ai_socktype,
 									info_->ai_protocol);
-		if (socket_fd_ != -1) {
-			is_closed_ = false;
+		if (socket_fd_ != -1)
 			break ;
-		}
 		info_ = info_->ai_next;
 	}
 	if (!info_)
@@ -40,8 +37,7 @@ const struct addrinfo *Socket::getSocketInfo(void) const {
 
 Socket::Socket(Socket&& other) : addr_info_ (move(other.addr_info_)),
 																socket_fd_(other.socket_fd_),
-																info_(move(other.info_)),
-																is_closed_(other.is_closed_) {
+																info_(move(other.info_)) {
 	other.info_ = nullptr;
 }
 
@@ -52,17 +48,12 @@ Socket& Socket::operator=(Socket&& other) {
 	socket_fd_ = other.socket_fd_;
 	info_ = move(other.info_);
 	other.info_ = nullptr;
-	is_closed_ = other.is_closed_;
 	return *this;
 }
 
 void	Socket::closeSocket(void) {
-	close(socket_fd_);
-	is_closed_ = true;
-}
-
-bool	Socket::isClosed(void) const {
-	return is_closed_;
+	if (socket_fd_)
+		close(socket_fd_);
 }
 
 Socket::~Socket() {

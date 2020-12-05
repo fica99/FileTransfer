@@ -3,10 +3,10 @@
 #include "Socket.h"
 #include <cstring>
 #include <stdexcept>
+#include "IDatagram.h"
 
 class Send {
 public:
-	static int sending(const Socket& sock, const char *msg, size_t len);
-	static int sending(const Socket& sock, const string& msg);
-	static int sending(const Socket& sock, string msg);
+	static size_t sending(const Socket& sock, const void *msg, size_t len);
+	static size_t sending(const Socket& sock, const IDatagram& datagram);
 };

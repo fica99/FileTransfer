@@ -18,7 +18,7 @@ public:
 #endif
 
 #define ERROR(msg) { \
-	ostringstream	ss;\
+	std::ostringstream	ss;\
 	ss << FILE_NAME << ":" \
 	<< __LINE__ << " error\n" << msg;\
 	Error::error(ss.str());\
