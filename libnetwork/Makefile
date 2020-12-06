@@ -11,6 +11,7 @@ SRC_FLS	=		AddrInfo.cpp\
 						Bind.cpp\
 						Deserialize.cpp\
 						Error.cpp\
+						Recv.cpp\
 						Send.cpp\
 						Serialize.cpp\
 						Socket.cpp\
