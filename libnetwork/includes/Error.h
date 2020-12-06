@@ -20,7 +20,7 @@ public:
 #define ERROR(msg) { \
 	std::ostringstream	ss;\
 	ss << FILE_NAME << ":" \
-	<< __LINE__ << " error\n" << msg;\
+	<< __LINE__ << " " << msg;\
 	Error::error(ss.str());\
 }
 

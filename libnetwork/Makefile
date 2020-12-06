@@ -9,14 +9,11 @@ OBJ_DIR	=		objs
 # ------------  SOURCE FILES  ------------------------------------------------ #
 SRC_FLS	=		AddrInfo.cpp\
 						Bind.cpp\
-						Datagram.cpp\
+						Deserialize.cpp\
 						Error.cpp\
 						Send.cpp\
 						Serialize.cpp\
 						Socket.cpp\
-
-
-
 
 # ------------  FILEPATHS  --------------------------------------------------- #
 SRCS	=		$(addprefix $(SRC_DIR)/, $(SRC_FLS))

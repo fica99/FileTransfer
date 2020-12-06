@@ -18,8 +18,3 @@ size_t	Send::sending(const Socket& sock, const void *msg, size_t len) {
 	return sended;
 }
 
-size_t	Send::sending(const Socket& sock, const IDatagram& datagram) {
-	auto data = datagram.getDatagram();
-	auto size = datagram.getDatagramSize();
-	return sending(sock, static_cast<void*>(data.get()), size);
-}

@@ -9,7 +9,7 @@
 
 class Socket {
 public:
-	Socket(AddrInfo addr_info);
+	explicit Socket(AddrInfo addr_info);
 	Socket(Socket&& other);
 	Socket(const Socket& other) = delete;
 	~Socket();
