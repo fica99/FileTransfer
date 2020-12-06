@@ -3,27 +3,29 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aashara <aashara@student.42.fr>            +#+  +:+       +#+         #
+#    By: aashara- <aashara-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/14 12:47:29 by aashara           #+#    #+#              #
-#    Updated: 2020/12/06 12:02:51 by aashara          ###   ########.fr        #
+#    Updated: 2020/12/06 16:52:05 by aashara-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ------------  PROJECT  ----------------------------------------------------- #
-NAME	=		FileServer
+NAME	=		../FileServer
 
 # ------------  DIRECTORIES  ------------------------------------------------- #
 SRC_DIR	=		src
 HDR_DIR	=		includes
 OBJ_DIR	=		objs
+LIB_DIR =		../lib
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
-SRC_FLS	= main.cpp
+SRC_FLS	= main.cpp\
+					FileServer.cpp
 
 # ------------  LIBNETWORK  ------------------------------------------------- #
 LNET		=		libnetwork.a
-LNET_DIR	=		../libnetwork
+LNET_DIR	=		$(LIB_DIR)/libnetwork
 LHS_NET_DIR	=		$(LNET_DIR)/includes
 
 # ------------  FILEPATHS  --------------------------------------------------- #

@@ -51,21 +51,3 @@ size_t	Datagram::getContentSize() const {
 size_t	Datagram::getContentMaxSize() const {
 	return datagram_size_ - header_size_;
 }
-
-
-
-
-//byte	*Serialize::serialize(const Header& header, byte *datagram) {
-
-//	auto end = serialize(header.seq_number, datagram);
-//	end = serialize(header.seq_total, end);
-//	end = serialize(header.type, end);
-//	memcpy(end, header.id, sizeof(header.id));
-//	return datagram + sizeof(header.id);
-//}
-
-//size_t	Send::sending(const Socket& sock, const IDatagram& datagram) {
-//	auto data = datagram.getDatagram();
-//	auto size = datagram.getDatagramSize();
-//	return sending(sock, static_cast<void*>(data.get()), size);
-//}

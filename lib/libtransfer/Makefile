@@ -14,7 +14,9 @@ LHS_NET_DIR	=		$(LNET_DIR)/includes
 
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
-SRC_FLS	=	Datagram.cpp
+SRC_FLS	=	Datagram.cpp\
+					Header.cpp\
+
 
 # ------------  FILEPATHS  --------------------------------------------------- #
 SRCS	=		$(addprefix $(SRC_DIR)/, $(SRC_FLS))
