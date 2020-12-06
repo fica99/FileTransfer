@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aashara- <aashara-@student.42.fr>          +#+  +:+       +#+         #
+#    By: aashara <aashara@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/14 12:47:29 by aashara           #+#    #+#              #
-#    Updated: 2020/12/02 19:19:21 by aashara-         ###   ########.fr        #
+#    Updated: 2020/12/06 12:02:51 by aashara          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,12 @@ HDR_DIR	=		includes
 OBJ_DIR	=		objs
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
-SRC_FLS	=
+SRC_FLS	= main.cpp
+
+# ------------  LIBNETWORK  ------------------------------------------------- #
+LNET		=		libnetwork.a
+LNET_DIR	=		../libnetwork
+LHS_NET_DIR	=		$(LNET_DIR)/includes
 
 # ------------  FILEPATHS  --------------------------------------------------- #
 SRCS	=		$(addprefix $(SRC_DIR)/, $(SRC_FLS))
@@ -30,15 +35,22 @@ DEPS	=		$(OBJS:.o=.d)
 CC		=		g++
 RM		=		rm -rf
 CFLGS	=		-Wall -Werror -Wextra -std=c++1z
-LFLGS	=
-IFLGS	=		-I $(HDR_DIR)
+LFLGS	=		-L $(LNET_DIR) -lnetwork
+IFLGS	=		-I $(HDR_DIR) -I $(LHS_NET_DIR)
 DFLGS	=		-MMD -MP
 OFLGS	=		-O0 -g
 
 # ------------  RULES  ------------------------------------------------------- #
 .PHONY: all clean fclean re
 
-all: $(NAME)
+all: lib $(NAME)
+
+lib:
+	$(MAKE) -C $(LNET_DIR)
+
+
+$(LNET_DIR)/$(LNET):
+	$(MAKE) -C $(LNET_DIR)
 
 -include $(DEPS)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
@@ -47,13 +59,15 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
-$(NAME): $(OBJS)
+$(NAME): $(LNET_DIR)/$(LNET) $(OBJS)
 	$(CC) -o $(NAME) $(OBJS) $(LFLGS)
 
 clean:
+	$(MAKE) -C $(LNET_DIR) clean
 	$(RM) $(OBJ_DIR)
 
 fclean:
+	$(MAKE) -C $(LNET_DIR) fclean
 	$(RM) $(OBJ_DIR)
 	$(RM) $(NAME)
 
