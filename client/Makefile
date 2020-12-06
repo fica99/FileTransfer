@@ -6,12 +6,12 @@
 #    By: aashara- <aashara-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/14 12:47:29 by aashara           #+#    #+#              #
-#    Updated: 2020/12/06 19:17:02 by aashara-         ###   ########.fr        #
+#    Updated: 2020/12/06 18:57:49 by aashara-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ------------  PROJECT  ----------------------------------------------------- #
-NAME	=		../FileServer
+NAME	=		../FileClient
 
 # ------------  DIRECTORIES  ------------------------------------------------- #
 SRC_DIR	=		src
@@ -20,8 +20,7 @@ OBJ_DIR	=		objs
 LIB_DIR =		../lib
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
-SRC_FLS	= main.cpp\
-					FileServer.cpp
+SRC_FLS	= main.cpp
 
 # ------------  LIBNETWORK  ------------------------------------------------- #
 LNET		=		libnetwork.a
@@ -44,7 +43,7 @@ CC		=		g++
 RM		=		rm -rf
 CFLGS	=		-Wall -Werror -Wextra -std=c++1z
 LFLGS	=		-L $(LNET_DIR) -lnetwork -L $(LTRANS_DIR) -ltransfer
-IFLGS	=		-I $(LHS_NET_DIR) -I $(LHS_NET_DIR) -I $(HDR_DIR)
+IFLGS	=		-I $(HDR_DIR) -I $(LHS_NET_DIR) -I $(LHS_NET_DIR)
 DFLGS	=		-MMD -MP
 OFLGS	=		-O0 -g
 

@@ -1,11 +1,12 @@
 #include "FileServer.h"
 
 #define SERV_PORT "1500"
+#define DATAGRAM_SIZE 1472
 
 using namespace	std;
 
 int	main(void) {
-	FileServer	server(SERV_PORT);
+	FileServer	server(SERV_PORT, DATAGRAM_SIZE);
 
 	while (true) {
 		break;
