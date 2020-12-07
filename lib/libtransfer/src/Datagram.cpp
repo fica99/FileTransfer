@@ -9,12 +9,12 @@ Datagram::Datagram(size_t datagram_size, size_t header_size) :
 											datagram_(new byte[datagram_size + 1]) {
 }
 
-void		Datagram::setContent(const char *content) {
+void		Datagram::setContent(const char *content, size_t content_size) {
 	size_t	content_max_size;
 
 	content_max_size = getContentMaxSize();
-	while (content[content_size_] &&
-		content_size_ < content_max_size) {
+	while (content_size_ < content_max_size &&
+							content_size_ < content_size) {
 		datagram_.get()[header_size_ + content_size_] =
 						static_cast<byte>(content[content_size_]);
 		++content_size_;
@@ -25,7 +25,7 @@ void		Datagram::setHeader(const byte *header) {
 	size_t	i;
 
 	i = 0;
-	while (to_integer<int>(header[i]) && i < header_size_) {
+	while (i < header_size_) {
 		datagram_.get()[i] = header[i];
 		++i;
 	}

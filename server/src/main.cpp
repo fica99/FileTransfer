@@ -6,7 +6,7 @@
 using namespace	std;
 
 int	main(void) {
-	FileServer	server(SERV_PORT, DATAGRAM_SIZE);
+	FileServer	server(SERV_PORT);
 
 	while (true) {
 		break;

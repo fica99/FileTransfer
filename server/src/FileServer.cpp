@@ -2,8 +2,8 @@
 
 using namespace	std;
 
-FileServer::FileServer(const char *serv_port, size_t datagram_size)
-								: datagram_size_(datagram_size),
+FileServer::FileServer(const char *serv_port)//, size_t datagram_size)
+								: //datagram_size_(datagram_size),
 								sock_(AddrInfo(NULL, serv_port, SOCK_DGRAM)) {
 	Bind::binding(sock_);
 }

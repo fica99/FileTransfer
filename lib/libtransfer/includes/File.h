@@ -1,25 +1,20 @@
 #pragma once
 
 #include <vector>
-#include <cstddef>
-#include <limits>
-#include <cstring>
-#include <cstdint>
-#include "Datagram.h"
 #include <stdexcept>
 #include <fstream>
+#include <cstddef>
+#include "Datagram.h"
 
 using datagrams = std::vector<Datagram>;
 
 class File {
 public:
-	File(const string& filename, size_t datagram_size);
-	const datagrams&	getDatagrams(void) const;
-	const std::byte		*getId(void) const;
+	File(const std::string& filename,
+			size_t datagram_size, size_t header_size);
+	datagrams&				getDatagrams(void);
+	void							getContent(std::byte *buff) const;
+	size_t						getContentSize(void) const;
 private:
-	void							addDatagram(Datagram datagram);
-	Datagram					createDatagram(ifstream& file, size_t datagram_size);
-	void							initId(void);
-	static std::byte	id_[8];
 	datagrams					data_;
 };

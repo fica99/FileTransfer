@@ -7,14 +7,13 @@
 
 class IHeader {
 public:
-	virtual ~IHeader(void);
-	virtual	size_t		size() const;
-	virtual std::byte	*serialize(std::byte *buff) const;
+	virtual	size_t		size() const = 0;
+	virtual std::byte	*serialize(std::byte *buff) const = 0;
 };
 
 
-struct Header : IHeader {
-	~Header(void) override = default;
+struct Header : public IHeader {
+public:
 	size_t		size() const override;
 	std::byte	*serialize(std::byte *buff) const override;
 	uint32_t	seq_number;

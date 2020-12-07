@@ -7,9 +7,9 @@
 
 class FileServer {
 public:
-	FileServer(const char *serv_port, size_t datagram_size);
+	FileServer(const char *serv_port);
 	//Datagram	getDatagram(void) const;
 private:
-	size_t	datagram_size_;
+	//size_t	datagram_size_;
 	Socket	sock_;
 };
