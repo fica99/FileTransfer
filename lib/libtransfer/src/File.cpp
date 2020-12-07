@@ -2,8 +2,8 @@
 
 using namespace	std;
 
-File::File(const string& filename, size_t datagram_size,
-															size_t header_size) {
+File::File(const string& filename, size_t datagram_size, size_t header_size)
+							: filename_(filename) {
 	ifstream	file(filename);
 	char			buff[datagram_size + 1];
 
@@ -20,6 +20,10 @@ File::File(const string& filename, size_t datagram_size,
 
 datagrams&	File::getDatagrams(void) {
 	return data_;
+}
+
+const string&	File::getFilename(void) const {
+	return filename_;
 }
 
 size_t		File::getContentSize(void) const {

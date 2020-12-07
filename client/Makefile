@@ -6,7 +6,7 @@
 #    By: aashara- <aashara-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/14 12:47:29 by aashara           #+#    #+#              #
-#    Updated: 2020/12/07 14:34:59 by aashara-         ###   ########.fr        #
+#    Updated: 2020/12/07 19:51:34 by aashara-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,10 @@ OBJ_DIR	=		objs
 LIB_DIR =		../lib
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
-SRC_FLS	= main.cpp\
-					FileClient.cpp\
+SRC_FLS	= createFiles.cpp\
+					main.cpp\
+					sendFiles.cpp
+
 
 # ------------  LIBNETWORK  ------------------------------------------------- #
 LNET		=		libnetwork.a
@@ -43,7 +45,7 @@ DEPS	=		$(OBJS:.o=.d)
 CC		=		g++
 RM		=		rm -rf
 CFLGS	=		-Wall -Werror -Wextra -std=c++1z
-LFLGS	=		 -L $(LTRANS_DIR) -ltransfer -L $(LNET_DIR) -lnetwork
+LFLGS	=		 -L $(LTRANS_DIR) -ltransfer -L $(LNET_DIR) -lnetwork -pthread
 IFLGS	=		-I $(HDR_DIR) -I $(LHS_NET_DIR) -I $(LHS_TRANS_DIR)
 DFLGS	=		-MMD -MP
 OFLGS	=		-O0 -g

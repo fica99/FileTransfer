@@ -2,11 +2,11 @@
 
 using namespace	std;
 
-Datagram::Datagram(size_t datagram_size, size_t header_size) :
-											datagram_size_(datagram_size),
+Datagram::Datagram(size_t datagram_max_size, size_t header_size) :
+											datagram_max_size_(datagram_max_size),
 											header_size_(header_size),
 											content_size_(0),
-											datagram_(new byte[datagram_size + 1]) {
+											datagram_(new byte[datagram_max_size + 1]) {
 }
 
 void		Datagram::setContent(const char *content, size_t content_size) {
@@ -31,12 +31,12 @@ void		Datagram::setHeader(const byte *header) {
 	}
 }
 
-bytes		Datagram::getDatagram(void) const {
+const bytes&	Datagram::getDatagram(void) const {
 	return datagram_;
 }
 
 size_t	Datagram::getDatagramSize() const {
-	return datagram_size_;
+	return content_size_ + header_size_;
 }
 
 const byte	*Datagram::getContent() const {
@@ -48,5 +48,5 @@ size_t	Datagram::getContentSize() const {
 }
 
 size_t	Datagram::getContentMaxSize() const {
-	return datagram_size_ - header_size_;
+	return datagram_max_size_ - header_size_;
 }
