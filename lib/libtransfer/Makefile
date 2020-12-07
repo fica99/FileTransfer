@@ -15,6 +15,7 @@ LHS_NET_DIR	=		$(LNET_DIR)/includes
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
 SRC_FLS	=	Datagram.cpp\
+					File.cpp\
 					Header.cpp\
 
 

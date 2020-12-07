@@ -2,7 +2,29 @@
 
 using namespace	std;
 
-File::File() {
+
+File::File(const string& filename, size_t datagram_size) {
+	ifstream	file(filename);
+
+	if (!file)
+		throw invalid_argument(filename + " does not exist");
+	while (!file.eof())
+		addDatagram(createDatagram(file, datagram_size));
+	initId();
+}
+
+Datagram	File::createDatagram(ifstream& file, size_t datagram_size) {
+	Header		header;
+	Datagram	datagram(datagram_size, header.size());
+	char			buff[datagram_size + 1];
+
+	file.read(buff, datagram.getContentMaxSize());
+	datagram.setContent(buff);
+	return datagram;
+}
+
+
+void	File::initId(void) {
 	int	size_id = sizeof(id_);
 
 	while (size_id--) {
