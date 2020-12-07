@@ -2,20 +2,25 @@
 
 using namespace	std;
 
-byte	*Header::serialize(std::byte *buff) const {
-	auto end = Serialize::serialize(seq_number, buff);
-	end = Serialize::serialize(seq_total, end);
-	end = Serialize::serialize(type, end);
-	memcpy(end, id, sizeof(id));
-	return buff + sizeof(id);
-}
-
 size_t	Header::size(void) const {
 	return sizeof(seq_number) + sizeof(seq_total)
 		+ sizeof(type) + sizeof(id);
 }
 
-byte	*serialize_header(const IHeader& header, byte *buff) {
-	return header.serialize(buff);
+
+
+byte	*serialize_header(const Header& header, std::byte *buff) {
+	auto end = Serialize::serialize(header.seq_number, buff);
+	end = Serialize::serialize(header.seq_total, end);
+	end = Serialize::serialize(header.type, end);
+	memcpy(end, header.id, sizeof(header.id));
+	return end + sizeof(header.id);
 }
 
+byte	*deserialize_header(Header& header, std::byte *buff) {
+	auto end = Deserialize::deserialize(buff, header.seq_number);
+	auto end = Deserialize::deserialize(end, header.seq_total);
+	auto end = Deserialize::deserialize(end, header.type);
+	memcpy(header.id, end, sizeof(header.id));
+	return end + sizeof(header.id);
+}

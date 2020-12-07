@@ -18,6 +18,7 @@
 #include "CRC.h"
 #include "LogInfo.h"
 #include "Send.h"
+#include "Recv.h"
 
 #define DATAGRAM_SIZE 1472
 #define PUT_TYPE 1
