@@ -9,7 +9,7 @@ using bytes = std::shared_ptr<std::byte>;
 class Datagram {
 public:
 	Datagram(size_t	datagram_size, size_t header_size);
-	void						setContent(const std::byte *content);
+	void						setContent(const char *content);
 	void						setHeader(const std::byte *header);
 	bytes						getDatagram(void) const;
 	size_t					getDatagramSize(void) const;
