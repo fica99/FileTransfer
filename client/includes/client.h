@@ -9,7 +9,8 @@
 #include <cstring>
 #include <cstddef>
 #include <limits>
-#include <future>
+#include <algorithm>
+#include <random>
 #include "Socket.h"
 #include "AddrInfo.h"
 #include "Datagram.h"
@@ -30,9 +31,14 @@
 /*
 **									createFiles.cpp
 */
-std::vector<File>		createFiles(std::vector<std::string> filenames);
+File								createFile(const std::string& filename);
 /*
 **									sendFiles.cpp
 */
 void								sendFiles(const char *ip, const char *serv_port,
-										std::vector<File> files);
+										std::vector<std::string> filenames);
+/*
+**									sendDatagram.cpp
+*/
+void								sendDatagram(const Socket& sock,
+													const Datagram& datagram);

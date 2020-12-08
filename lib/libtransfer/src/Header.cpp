@@ -7,18 +7,18 @@ size_t	Header::size(void) const {
 		+ sizeof(type) + sizeof(id);
 }
 
-byte	*serializeHeader(const Header& header, byte *buff) {
-	auto end = Serialize::serialize(header.seq_number, buff);
-	end = Serialize::serialize(header.seq_total, end);
-	end = Serialize::serialize(header.type, end);
-	memcpy(end, header.id, sizeof(header.id));
-	return end + sizeof(header.id);
+byte	*Header::serialize(byte *buff) const {
+	auto end = Serialize::serialize(seq_number, buff);
+	end = Serialize::serialize(seq_total, end);
+	end = Serialize::serialize(type, end);
+	memcpy(end, id, sizeof(id));
+	return end + sizeof(id);
 }
 
-byte	*deserializeHeader(Header& header, byte *buff) {
-	auto end = Deserialize::deserialize(header.seq_number, buff);
-	end = Deserialize::deserialize(header.seq_total, end);
-	end = Deserialize::deserialize(header.type, end);
-	memcpy(header.id, end, sizeof(header.id));
-	return end + sizeof(header.id);
+byte	*Header::deserialize(byte *buff) {
+	auto end = Deserialize::deserialize(seq_number, buff);
+	end = Deserialize::deserialize(seq_total, end);
+	end = Deserialize::deserialize(type, end);
+	memcpy(id, end, sizeof(id));
+	return end + sizeof(id);
 }

@@ -9,11 +9,11 @@
 struct Header {
 public:
 	size_t		size() const;
+	std::byte	*serialize(std::byte *buff) const;
+	std::byte	*deserialize(std::byte *buff);
 	uint32_t	seq_number;
 	uint32_t	seq_total;
 	uint8_t		type;
 	std::byte	id[8];
 };
 
-std::byte	*serializeHeader(const Header& header, std::byte *buff);
-std::byte	*deserializeHeader(Header& header, std::byte *buff);

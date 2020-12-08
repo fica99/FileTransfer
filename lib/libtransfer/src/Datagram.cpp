@@ -2,9 +2,8 @@
 
 using namespace	std;
 
-Datagram::Datagram(size_t datagram_max_size, size_t header_size) :
+Datagram::Datagram(size_t datagram_max_size) :
 											datagram_max_size_(datagram_max_size),
-											header_size_(header_size),
 											content_size_(0),
 											datagram_(new byte[datagram_max_size + 1]) {
 }
@@ -15,20 +14,19 @@ void		Datagram::setContent(const char *content, size_t content_size) {
 	content_max_size = getContentMaxSize();
 	while (content_size_ < content_max_size &&
 							content_size_ < content_size) {
-		datagram_.get()[header_size_ + content_size_] =
+		datagram_.get()[header_.size() + content_size_] =
 						static_cast<byte>(content[content_size_]);
 		++content_size_;
 	}
 }
 
-void		Datagram::setHeader(const byte *header) {
-	size_t	i;
+void		Datagram::setHeader(Header header) {
+	header_ = move(header);
+	header.serialize(datagram_.get());
+}
 
-	i = 0;
-	while (i < header_size_) {
-		datagram_.get()[i] = header[i];
-		++i;
-	}
+const Header&		Datagram::getHeader(void) const {
+	return header_;
 }
 
 const bytes&	Datagram::getDatagram(void) const {
@@ -36,11 +34,11 @@ const bytes&	Datagram::getDatagram(void) const {
 }
 
 size_t	Datagram::getDatagramSize() const {
-	return content_size_ + header_size_;
+	return content_size_ + header_.size();
 }
 
 const byte	*Datagram::getContent() const {
-	return datagram_.get() + header_size_;
+	return datagram_.get() + header_.size();
 }
 
 size_t	Datagram::getContentSize() const {
@@ -48,5 +46,5 @@ size_t	Datagram::getContentSize() const {
 }
 
 size_t	Datagram::getContentMaxSize() const {
-	return datagram_max_size_ - header_size_;
+	return datagram_max_size_ - header_.size();
 }

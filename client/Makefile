@@ -6,7 +6,7 @@
 #    By: aashara- <aashara-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/14 12:47:29 by aashara           #+#    #+#              #
-#    Updated: 2020/12/08 13:21:29 by aashara-         ###   ########.fr        #
+#    Updated: 2020/12/08 14:37:35 by aashara-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ LIB_DIR =		../lib
 # ------------  SOURCE FILES  ------------------------------------------------ #
 SRC_FLS	= createFiles.cpp\
 					main.cpp\
-					sendFiles.cpp
+					sendDatagram.cpp\
+					sendFiles.cpp\
 
 
 # ------------  LIBNETWORK  ------------------------------------------------- #
@@ -45,7 +46,7 @@ DEPS	=		$(OBJS:.o=.d)
 CC		=		g++
 RM		=		rm -rf
 CFLGS	=		-Wall -Werror -Wextra -std=c++1z
-LFLGS	=		 -L $(LTRANS_DIR) -ltransfer -L $(LNET_DIR) -lnetwork -pthread
+LFLGS	=		 -L $(LTRANS_DIR) -ltransfer -L $(LNET_DIR) -lnetwork
 IFLGS	=		-I $(HDR_DIR) -I $(LHS_NET_DIR) -I $(LHS_TRANS_DIR)
 DFLGS	=		-MMD -MP
 OFLGS	=		-O0 -g

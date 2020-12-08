@@ -34,7 +34,6 @@ int	main(int argc, char **argv) {
 	char						*serv_port = NULL;
 
 	vector<string> filenames = parseArgs(argc, argv, &ip, &serv_port);
-	vector<File> files = createFiles(move(filenames));
-	sendFiles(ip, serv_port, move(files));
+	sendFiles(ip, serv_port, move(filenames));
 	return (0);
 }

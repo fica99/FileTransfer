@@ -10,8 +10,7 @@ using datagrams = std::vector<Datagram>;
 
 class File {
 public:
-	File(const std::string& filename,
-			size_t datagram_size, size_t header_size);
+	File(const std::string& filename, size_t datagram_size);
 	datagrams&					getDatagrams(void);
 	void								getContent(std::byte *buff) const;
 	size_t							getContentSize(void) const;

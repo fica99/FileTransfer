@@ -2,7 +2,7 @@
 
 using namespace	std;
 
-File::File(const string& filename, size_t datagram_size, size_t header_size)
+File::File(const string& filename, size_t datagram_size)
 							: filename_(filename) {
 	ifstream	file(filename);
 	char			buff[datagram_size + 1];
@@ -10,7 +10,7 @@ File::File(const string& filename, size_t datagram_size, size_t header_size)
 	if (!file)
 		throw invalid_argument(filename + " does not exist");
 	while (!file.eof()) {
-		Datagram	datagram(datagram_size, header_size);
+		Datagram	datagram(datagram_size);
 
 		file.read(buff, datagram.getContentMaxSize());
 		datagram.setContent(buff, file.gcount());
