@@ -2,16 +2,15 @@
 
 using namespace	std;
 
-byte	*deserialize(std::byte *datagram, uint32_t& nb) {
+byte	*Deserialize::deserialize(uint32_t& nb, std::byte *buff) {
 	size_t size_int = sizeof(nb);
-	memcpy(&nb, datagram, size_int);
+	memcpy(&nb, buff, size_int);
 	nb = ntohl(nb);
-	return datagram + size_int;
-
+	return buff + size_int;
 }
 
-byte	*deserialize(std::byte *datagram, uint8_t& nb) {
+byte	*Deserialize::deserialize(uint8_t& nb, std::byte *buff) {
 	size_t size_char = sizeof(nb);
-	memcpy(&nb, datagram, size_char);
-	return datagram + size_char;
+	memcpy(&nb, buff, size_char);
+	return buff + size_char;
 }

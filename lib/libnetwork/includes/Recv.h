@@ -7,5 +7,5 @@
 
 class Recv {
 public:
-	static void	recving(const Socket& sock, void *buf, size_t len);
+	static size_t	recving(const Socket& sock, void *buf, size_t len);
 };

@@ -21,7 +21,10 @@
 #include "Recv.h"
 
 #define DATAGRAM_SIZE 1472
+#define RECV_TIMEOUT_SEC 0
+#define RECV_TIMEOUT_MICROSEC 500000
 #define PUT_TYPE 1
+#define ACK_TYPE 0
 
 
 /*

@@ -2,7 +2,7 @@
 
 using namespace	std;
 
-void	Send::sending(const Socket& sock, const void *msg, size_t len) {
+size_t	Send::sending(const Socket& sock, const void *msg, size_t len) {
 	const struct addrinfo	*info = sock.getSocketInfo();
 	int										fd = sock.getSocketFd();
 	size_t								sended;
@@ -13,7 +13,10 @@ void	Send::sending(const Socket& sock, const void *msg, size_t len) {
 		size = sendto(fd, msg, len, 0, info->ai_addr, info->ai_addrlen);
 		if (size < 0)
 			throw runtime_error("Sendto() error");
+		if (!size)
+			break ;
 		sended += size;
 	}
+	return sended;
 }
 

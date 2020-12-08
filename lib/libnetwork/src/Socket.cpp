@@ -31,6 +31,17 @@ int	Socket::getSocketFd(void) const {
 	return socket_fd_;
 }
 
+void	Socket::setTimeout(time_t seconds, suseconds_t microseconds) const {
+	struct timeval tv;
+	int	res;
+
+	tv.tv_sec = seconds;
+	tv.tv_usec = microseconds;
+	res = setsockopt(socket_fd_, SOL_SOCKET, SO_RCVTIMEO,(char *)&tv, sizeof(tv));
+	if (res == 1)
+		ERROR("Failed to set timeout");
+}
+
 const struct addrinfo *Socket::getSocketInfo(void) const {
 	return info_;
 }

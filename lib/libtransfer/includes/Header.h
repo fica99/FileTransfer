@@ -6,7 +6,6 @@
 #include "Serialize.h"
 #include "Deserialize.h"
 
-
 struct Header {
 public:
 	size_t		size() const;
@@ -16,6 +15,5 @@ public:
 	std::byte	id[8];
 };
 
-std::byte	*deserialize_header(Header& header, std::byte *buff);
-std::byte	*serialize_header(const Header& header, std::byte *buff);
-
+std::byte	*serializeHeader(const Header& header, std::byte *buff);
+std::byte	*deserializeHeader(Header& header, std::byte *buff);

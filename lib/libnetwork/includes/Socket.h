@@ -19,6 +19,9 @@ public:
 	int										getSocketFd(void) const;
 	const struct addrinfo *getSocketInfo(void) const;
 	void									closeSocket(void);
+	void									setTimeout(time_t seconds,
+															suseconds_t microseconds) const;
+
 private:
 	AddrInfo							addr_info_;
 	int										socket_fd_;

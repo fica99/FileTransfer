@@ -28,7 +28,7 @@ static File	createFile(const string& filename) {
 	header.seq_number = 0;
 	header.type = PUT_TYPE;
 	for (auto& datagram : datagrams) {
-		serialize_header(header, buff);
+		serializeHeader(header, buff);
 		datagram.setHeader(buff);
 		++header.seq_number;
 	}
@@ -45,7 +45,6 @@ static void					printFileInfo(File& file, const string& filename) {
 				content_size, CRC::crc32c(0, buff, content_size));
 
 }
-
 
 vector<File>				createFiles(vector<string> filenames) {
 	vector<File>			files;
