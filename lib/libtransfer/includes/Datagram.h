@@ -11,6 +11,7 @@ class Datagram {
 public:
 	Datagram(size_t	datagram_max_size);
 	void						setContent(const char *content, size_t content_size);
+	void						setContent(const std::byte *content, size_t content_size);
 	void						setHeader(Header header);
 	const Header&		getHeader(void) const;
 	const bytes&		getDatagram(void) const;

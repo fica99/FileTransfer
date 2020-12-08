@@ -11,8 +11,10 @@ static bool	isConfirmedDatagram(const Socket& sock, const Datagram& datagram) {
 	LOG_INFO(1, "Send header: seq_number - %d, seq_total - %d, type - %d\n", send_header.seq_number, send_header.seq_total, send_header.type);
 	size_t get_bytes = Recv::recving(sock, buff, send_header.size());
 	LOG_INFO(1, "Got %ld bytes\n", get_bytes);
-	if (get_header.size() > get_bytes)
+	if (get_header.size() > get_bytes) {
+		LOG_INFO(1, "Requet timeout (for datagram confirmation)%s", "\n");
 		return false;
+	}
 	get_header.deserialize(buff);
 	LOG_INFO(1, "Got header: seq_number - %d, seq_total - %d, type - %d\n", get_header.seq_number, get_header.seq_total, get_header.type);
 	if (get_header.type != ACK_TYPE

@@ -6,7 +6,7 @@
 #    By: aashara- <aashara-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/14 12:47:29 by aashara           #+#    #+#              #
-#    Updated: 2020/12/06 19:17:02 by aashara-         ###   ########.fr        #
+#    Updated: 2020/12/08 23:25:50 by aashara-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,10 @@ OBJ_DIR	=		objs
 LIB_DIR =		../lib
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
-SRC_FLS	= main.cpp\
-					FileServer.cpp
+SRC_FLS	= datagramHandle.cpp\
+					main.cpp\
+					setDatagram.cpp
+
 
 # ------------  LIBNETWORK  ------------------------------------------------- #
 LNET		=		libnetwork.a
@@ -43,8 +45,8 @@ DEPS	=		$(OBJS:.o=.d)
 CC		=		g++
 RM		=		rm -rf
 CFLGS	=		-Wall -Werror -Wextra -std=c++1z
-LFLGS	=		-L $(LNET_DIR) -lnetwork -L $(LTRANS_DIR) -ltransfer
-IFLGS	=		-I $(LHS_NET_DIR) -I $(LHS_NET_DIR) -I $(HDR_DIR)
+LFLGS	=		-L $(LTRANS_DIR) -ltransfer -L $(LNET_DIR) -lnetwork
+IFLGS	=		-I $(LHS_NET_DIR) -I $(LHS_TRANS_DIR) -I $(HDR_DIR)
 DFLGS	=		-MMD -MP
 OFLGS	=		-O0 -g
 

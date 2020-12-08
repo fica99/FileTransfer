@@ -10,7 +10,7 @@ size_t	Send::sending(const Socket& sock, const void *msg, size_t len) {
 
 	sended = 0;
 	while (sended < len) {
-		size = sendto(fd, msg, len, 0, info->ai_addr, info->ai_addrlen);
+		size = sendto(fd, msg, len - sended, 0, info->ai_addr, info->ai_addrlen);
 		if (size < 0)
 			throw runtime_error("Sendto() error");
 		if (!size)

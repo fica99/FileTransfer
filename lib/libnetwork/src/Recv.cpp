@@ -10,7 +10,7 @@ size_t	Recv::recving(const Socket& sock, void *buf, size_t len) {
 
 	got = 0;
 	while (got < len) {
-		size = recvfrom(fd, buf, len, 0, info->ai_addr,
+		size = recvfrom(fd, buf, len - got, 0, info->ai_addr,
 									(socklen_t*)&info->ai_addrlen);
 		if (errno == EWOULDBLOCK)
 			break;

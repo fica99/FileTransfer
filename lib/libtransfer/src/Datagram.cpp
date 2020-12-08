@@ -20,6 +20,17 @@ void		Datagram::setContent(const char *content, size_t content_size) {
 	}
 }
 
+void		Datagram::setContent(const byte *content, size_t content_size) {
+	size_t	content_max_size;
+
+	content_max_size = getContentMaxSize();
+	while (content_size_ < content_max_size &&
+							content_size_ < content_size) {
+		datagram_.get()[header_.size() + content_size_] = content[content_size_];
+		++content_size_;
+	}
+}
+
 void		Datagram::setHeader(Header header) {
 	header_ = move(header);
 	header.serialize(datagram_.get());
