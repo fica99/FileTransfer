@@ -8,7 +8,6 @@ OBJ_DIR	=		objs
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
 SRC_FLS	=		AddrInfo.cpp\
-						Bind.cpp\
 						Deserialize.cpp\
 						Error.cpp\
 						Recv.cpp\

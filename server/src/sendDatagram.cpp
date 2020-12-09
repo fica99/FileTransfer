@@ -2,9 +2,10 @@
 
 using namespace	std;
 
-void			sendDatagram(Socket& sock, Datagram datagram) {
+void			sendDatagram(int fd, struct sockaddr *from, socklen_t *from_len,
+						Datagram datagram) {
 	try {
-		size_t nb_sended_bytes = datagram.send(sock);
+		size_t nb_sended_bytes = datagram.send(fd, from, *from_len);
 		LOG_INFO(1, "Server: Send %ld bytes, datagram of size %ld\n", nb_sended_bytes, datagram.getContentSize());
 	} catch (exception& ex) {
 		cerr << ex.what() << endl;

@@ -20,25 +20,35 @@ static void	parseArgs(int argc, char **argv, char **serv_port) {
 		printUsage();
 }
 
-static void	serverLoop(const char *serv_port) {
-	Socket				sock(AddrInfo("0.0.0.0", serv_port, SOCK_DGRAM));
+static void	serverLoop(Socket sock) {
 	vector<File>	files;
+	struct sockaddr	from;
+	socklen_t				from_len;
 
-	LOG_INFO(1, "Server: Create listen socket: port - %s\n", serv_port);
-	Bind::binding(sock);
-	LOG_INFO(1, "Server: Bind listen socket%s", "\n");
 	while (true) {
-		auto datagram = getDatagram(sock);
+		auto datagram = getDatagram(sock.getSocketFd(), &from, &from_len);
 		auto file = addDatagram(files, datagram);
 		auto confirmation = confirmDatagram(file, datagram);
-		sendDatagram(sock, move(confirmation));
+		sendDatagram(sock.getSocketFd(), &from, &from_len, move(confirmation));
 	}
+}
+
+static Socket	createSocket(const char *serv_port) {
+	AddrInfo	info("0.0.0.0", serv_port, SOCK_DGRAM);
+	Socket		sock(info.getAddrInfo()->ai_family,
+							info.getAddrInfo()->ai_socktype,
+							info.getAddrInfo()->ai_protocol
+						);
+
+	sock.binding(info.getAddrInfo()->ai_addr,
+				info.getAddrInfo()->ai_addrlen);
+	return sock;
 }
 
 int	main(int argc, char **argv) {
 	char	*serv_port = NULL;
 
 	parseArgs(argc, argv, &serv_port);
-	serverLoop(serv_port);
+	serverLoop(createSocket(serv_port));
 	return (0);
 }

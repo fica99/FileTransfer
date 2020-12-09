@@ -2,9 +2,8 @@
 
 using namespace	std;
 
-AddrInfo::AddrInfo(const char *ip_addr,
-									const char *serv_port,
-									int socktype) : serv_info_(nullptr) {
+AddrInfo::AddrInfo(const char *ip_addr, const char *serv_port, int socktype)
+																										: serv_info_(nullptr) {
 	int							rv;
 	struct addrinfo	hints;
 
@@ -18,7 +17,7 @@ AddrInfo::AddrInfo(const char *ip_addr,
 		ERROR(string("getaddrinfo: ") + gai_strerror(rv));
 }
 
-struct addrinfo *AddrInfo::getAddrInfo() {
+const struct addrinfo *AddrInfo::getAddrInfo() const {
 	return serv_info_;
 }
 

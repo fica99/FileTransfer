@@ -7,6 +7,6 @@
 
 class Deserialize {
 public:
-	static std::byte	*deserialize(uint32_t& nb, std::byte *buff);
-	static std::byte	*deserialize(uint8_t& nb, std::byte *buff);
+	static const std::byte	*deserialize(uint32_t& nb, const std::byte *buff);
+	static const std::byte	*deserialize(uint8_t& nb, const std::byte *buff);
 };

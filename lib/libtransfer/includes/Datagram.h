@@ -7,7 +7,6 @@
 #include "Header.h"
 #include "Send.h"
 #include "Recv.h"
-#include "Socket.h"
 
 using bytes = std::shared_ptr<std::byte>;
 
@@ -24,8 +23,10 @@ public:
 	size_t					getContentSize(void) const;
 	size_t					getContentMaxSize(void) const;
 	bool						operator==(const Datagram& other) const;
-	size_t					send(Socket& sock) const;
-	size_t					recv(Socket& sock);
+	size_t					send(int fd, const struct sockaddr *dest_addr,
+													socklen_t dest_len) const;
+	size_t					recv(int fd, struct sockaddr *from,
+													socklen_t* from_len);
 private:
 	Header					header_;
 	size_t					datagram_max_size_;

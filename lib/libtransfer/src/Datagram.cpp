@@ -5,7 +5,19 @@ using namespace	std;
 Datagram::Datagram(size_t datagram_max_size) :
 											datagram_max_size_(datagram_max_size),
 											content_size_(0),
-											datagram_(new byte[datagram_max_size + 1]) {
+											datagram_(new byte[datagram_max_size]) {
+}
+
+void		Datagram::setContent(const byte *content, size_t content_size) {
+	size_t	content_max_size;
+
+	content_max_size = getContentMaxSize();
+	while (content_size_ < content_max_size &&
+							content_size_ < content_size) {
+		datagram_.get()[header_.size() + content_size_] =
+						content[content_size_];
+		++content_size_;
+	}
 }
 
 void		Datagram::setContent(const char *content, size_t content_size) {
@@ -16,17 +28,6 @@ void		Datagram::setContent(const char *content, size_t content_size) {
 							content_size_ < content_size) {
 		datagram_.get()[header_.size() + content_size_] =
 						static_cast<byte>(content[content_size_]);
-		++content_size_;
-	}
-}
-
-void		Datagram::setContent(const byte *content, size_t content_size) {
-	size_t	content_max_size;
-
-	content_max_size = getContentMaxSize();
-	while (content_size_ < content_max_size &&
-							content_size_ < content_size) {
-		datagram_.get()[header_.size() + content_size_] = content[content_size_];
 		++content_size_;
 	}
 }
@@ -68,14 +69,15 @@ bool		Datagram::operator==(const Datagram& other) const {
 	return false;
 }
 
-size_t	Datagram::send(Socket& sock) const {
-	return Send::sending(sock, datagram_.get(), getDatagramSize());
+size_t	Datagram::send(int fd, const struct sockaddr *dest_addr,
+												socklen_t dest_len) const {
+	return Send::sendall(fd, datagram_.get(), getDatagramSize(), dest_addr, dest_len);
 }
 
-size_t	Datagram::recv(Socket& sock) {
+size_t	Datagram::recv(int fd, struct sockaddr *from, socklen_t* from_len) {
 	size_t got_bytes;
 
-	got_bytes = Recv::recving(sock, datagram_.get(), datagram_max_size_);
+	got_bytes = Recv::recvall(fd, datagram_.get(), datagram_max_size_, from, from_len);
 	header_.deserialize(datagram_.get());
 	return got_bytes;
 }

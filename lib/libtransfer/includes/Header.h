@@ -11,7 +11,7 @@ struct Header {
 public:
 	size_t		size() const;
 	std::byte	*serialize(std::byte *buff) const;
-	std::byte	*deserialize(std::byte *buff);
+	const std::byte	*deserialize(const std::byte *buff);
 	bool			operator==(const Header& other) const;
 	uint32_t	seq_number;
 	uint32_t	seq_total;

@@ -11,7 +11,6 @@
 #include "AddrInfo.h"
 #include "Socket.h"
 #include "LogInfo.h"
-#include "Bind.h"
 #include "Datagram.h"
 #include "Recv.h"
 #include "File.h"
@@ -35,8 +34,9 @@ Datagram	confirmDatagram(File& file, const Datagram& datagram);
 /*
 **				getDatagram.cpp
 */
-Datagram	getDatagram(Socket& sock);
+Datagram	getDatagram(int fd, struct sockaddr *from, socklen_t *from_len);
 /*
 **				sendDatagram.cpp
 */
-void			sendDatagram(Socket& sock, Datagram datagram);
+void			sendDatagram(int fd, struct sockaddr *from, socklen_t *from_len,
+						Datagram datagram);

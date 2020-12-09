@@ -36,8 +36,9 @@ File								createFile(const std::string& filename);
 /*
 **									sendDatagram.cpp
 */
-void								sendDatagram(Socket& sock,
-													const Datagram& datagram);
+void								sendDatagram(const Socket& sock,
+										const AddrInfo& info, const Datagram& datagram);
+
 /*
 **									sendFiles.cpp
 */

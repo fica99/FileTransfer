@@ -15,7 +15,7 @@ byte	*Header::serialize(byte *buff) const {
 	return end + sizeof(id);
 }
 
-byte	*Header::deserialize(byte *buff) {
+const byte	*Header::deserialize(const byte *buff) {
 	auto end = Deserialize::deserialize(seq_number, buff);
 	end = Deserialize::deserialize(seq_total, end);
 	end = Deserialize::deserialize(type, end);

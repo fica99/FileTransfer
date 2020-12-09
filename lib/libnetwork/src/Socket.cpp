@@ -1,30 +1,9 @@
 #include "Socket.h"
 
-using namespace	std;
-
-Socket::Socket(AddrInfo addr_info) : addr_info_(move(addr_info)),
-																		socket_fd_(0),
-																		info_(nullptr) {
-	updateSocket();
-}
-
-int	Socket::updateSocket(void) {
-	if (!info_)
-		info_ = addr_info_.getAddrInfo();
-	else {
-		closeSocket();
-		info_ = info_->ai_next;
-	}
-	while (info_) {
-		socket_fd_ = socket(info_->ai_family, info_->ai_socktype,
-									info_->ai_protocol);
-		if (socket_fd_ != -1)
-			break ;
-		info_ = info_->ai_next;
-	}
-	if (!info_)
+Socket::Socket(int domain, int type, int protocol) {
+	socket_fd_ = socket(domain, type, protocol);
+	if (socket_fd_ == -1)
 		ERROR("Failed to get socket file descriptor");
-	return socket_fd_;
 }
 
 int	Socket::getSocketFd(void) const {
@@ -38,12 +17,8 @@ void	Socket::setTimeout(time_t seconds, suseconds_t microseconds) const {
 	tv.tv_sec = seconds;
 	tv.tv_usec = microseconds;
 	res = setsockopt(socket_fd_, SOL_SOCKET, SO_RCVTIMEO,(char *)&tv, sizeof(tv));
-	if (res == 1)
+	if (res == -1)
 		ERROR("Failed to set timeout");
-}
-
-struct addrinfo *Socket::getAddrInfo(void) {
-	return info_;
 }
 
 void	Socket::closeSocket(void) {
@@ -53,4 +28,15 @@ void	Socket::closeSocket(void) {
 
 Socket::~Socket() {
 	closeSocket();
+}
+
+void	Socket::binding(const struct sockaddr *address, socklen_t address_len) {
+	int	rv = 1;
+
+	if (setsockopt(socket_fd_, SOL_SOCKET, SO_REUSEADDR, &rv, sizeof(int)) == -1)
+		ERROR("Setsockopt failed");
+	if (bind(socket_fd_, address, address_len) == -1) {
+		closeSocket();
+		ERROR("Failed binding socket fd");
+	}
 }
