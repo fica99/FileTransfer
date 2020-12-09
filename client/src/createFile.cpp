@@ -18,8 +18,8 @@ static const byte	*getId(void) {
 }
 
 File			createFile(const string& filename) {
-	Header	header;
 	File		file(filename, DATAGRAM_SIZE);
+	Header	header;
 
 	auto& datagrams = file.getDatagrams();
 	memcpy(header.id, getId(), sizeof(header.id));

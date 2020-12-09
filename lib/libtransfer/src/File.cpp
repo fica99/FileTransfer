@@ -18,6 +18,17 @@ File::File(const string& filename, size_t datagram_size)
 	}
 }
 
+File::File(File&& other) : filename_(move(other.filename_)),
+														data_(move(other.data_)) {
+}
+
+File&	File::operator=(File&& other) {
+	filename_ = move(other.filename_);
+	data_ = move(other.data_);
+	return *this;
+}
+
+
 datagrams&	File::getDatagrams(void) {
 	return data_;
 }
@@ -42,4 +53,13 @@ void			File::getContent(byte *buff) const {
 		memcpy(buff + i, datagram.getContent(), datagram.getContentSize());
 		i += datagram.getContentSize();
 	}
+}
+
+
+uint32_t	File::crc32c(uint32_t crc) const {
+	size_t	content_size = getContentSize();
+	byte		buff[content_size];
+
+	getContent(buff);
+	return CRC::crc32c(crc, buff, content_size);
 }

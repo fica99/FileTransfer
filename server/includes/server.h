@@ -39,4 +39,4 @@ Datagram	getDatagram(int fd, struct sockaddr *from, socklen_t *from_len);
 **				sendDatagram.cpp
 */
 void			sendDatagram(int fd, struct sockaddr *from, socklen_t *from_len,
-						Datagram datagram);
+						const Datagram& datagram);

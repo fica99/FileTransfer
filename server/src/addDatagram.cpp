@@ -3,8 +3,10 @@
 using namespace	std;
 
 static void	createFile(vector<File>& files, const Datagram& datagram) {
-	files.push_back(File());
-	files.back().getDatagrams().push_back(datagram);
+	File	file;
+
+	file.getDatagrams().push_back(datagram);
+	files.push_back(move(file));
 	LOG_INFO(1, "Server: Create new file, insert datagram%s", "\n")
 }
 
@@ -12,7 +14,7 @@ static void	addDatagram2File(File& file, const Datagram& datagram) {
 	auto& datagrams = file.getDatagrams();
 	auto it = find_if(datagrams.begin(), datagrams.end(),
 							[&](const Datagram& dat) {
-								return !(dat == datagram);
+								return dat == datagram;
 							}
 						);
 	if (it == datagrams.end()) {

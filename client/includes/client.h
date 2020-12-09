@@ -16,7 +16,6 @@
 #include "Datagram.h"
 #include "File.h"
 #include "Header.h"
-#include "CRC.h"
 #include "LogInfo.h"
 #include "Send.h"
 #include "Recv.h"

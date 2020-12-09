@@ -21,27 +21,27 @@ static void	parseArgs(int argc, char **argv, char **serv_port) {
 }
 
 static void	serverLoop(Socket sock) {
-	vector<File>	files;
 	struct sockaddr	from;
 	socklen_t				from_len;
+	vector<File>		files;
 
 	while (true) {
-		auto datagram = getDatagram(sock.getSocketFd(), &from, &from_len);
-		auto file = addDatagram(files, datagram);
+		Datagram datagram = getDatagram(sock.getSocketFd(), &from, &from_len);
+		auto& file = addDatagram(files, datagram);
 		auto confirmation = confirmDatagram(file, datagram);
-		sendDatagram(sock.getSocketFd(), &from, &from_len, move(confirmation));
+		sendDatagram(sock.getSocketFd(), &from, &from_len, confirmation);
 	}
 }
 
 static Socket	createSocket(const char *serv_port) {
-	AddrInfo	info("0.0.0.0", serv_port, SOCK_DGRAM);
-	Socket		sock(info.getAddrInfo()->ai_family,
-							info.getAddrInfo()->ai_socktype,
-							info.getAddrInfo()->ai_protocol
+	AddrInfo	info(NULL, serv_port, SOCK_DGRAM);
+	const addrinfo *struct_info = info.getAddrInfo();
+	Socket		sock(struct_info->ai_family,
+							struct_info->ai_socktype,
+							struct_info->ai_protocol
 						);
 
-	sock.binding(info.getAddrInfo()->ai_addr,
-				info.getAddrInfo()->ai_addrlen);
+	sock.binding(struct_info->ai_addr, struct_info->ai_addrlen);
 	return sock;
 }
 

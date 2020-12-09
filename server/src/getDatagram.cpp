@@ -4,7 +4,7 @@ using namespace	std;
 
 Datagram	getDatagram(int fd, struct sockaddr *from,
 														socklen_t *from_len) {
-	Datagram	datagram(DATAGRAM_SIZE);
+	Datagram datagram(DATAGRAM_SIZE);
 
 	try {
 		size_t got_bytes = datagram.recv(fd, from, from_len);

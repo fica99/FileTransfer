@@ -13,6 +13,10 @@ using bytes = std::shared_ptr<std::byte>;
 class Datagram {
 public:
 	Datagram(size_t	datagram_max_size);
+	Datagram(const Datagram& other);
+	Datagram(Datagram&& other);
+	Datagram&				operator=(const Datagram& other);
+	Datagram&				operator=(Datagram&& other);
 	void						setContent(const char *content, size_t content_size);
 	void						setContent(const std::byte *content, size_t content_size);
 	void						setHeader(Header header);

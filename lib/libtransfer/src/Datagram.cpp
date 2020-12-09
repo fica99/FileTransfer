@@ -8,13 +8,43 @@ Datagram::Datagram(size_t datagram_max_size) :
 											datagram_(new byte[datagram_max_size]) {
 }
 
+Datagram::Datagram(Datagram&& other) : header_(move(other.header_)),
+																			datagram_max_size_(other.datagram_max_size_),
+																			content_size_(other.content_size_),
+																			datagram_(move(other.datagram_)) {
+}
+
+Datagram::Datagram(const Datagram& other) : header_(other.header_),
+																			datagram_max_size_(other.datagram_max_size_),
+																			content_size_(other.content_size_),
+																			datagram_(other.datagram_) {
+}
+
+Datagram&	Datagram::operator=(Datagram&& other) {
+	header_ = move(other.header_);
+	datagram_max_size_ = other.datagram_max_size_;
+	content_size_ = other.content_size_;
+	datagram_ = move(other.datagram_);
+	return *this;
+}
+
+Datagram&	Datagram::operator=(const Datagram& other) {
+	header_ = other.header_;
+	datagram_max_size_ = other.datagram_max_size_;
+	content_size_ = other.content_size_;
+	datagram_ = other.datagram_;
+	return *this;
+}
+
+
 void		Datagram::setContent(const byte *content, size_t content_size) {
 	size_t	content_max_size;
+	size_t	header_size = header_.size();
 
 	content_max_size = getContentMaxSize();
 	while (content_size_ < content_max_size &&
 							content_size_ < content_size) {
-		datagram_.get()[header_.size() + content_size_] =
+		datagram_.get()[header_size + content_size_] =
 						content[content_size_];
 		++content_size_;
 	}
@@ -78,6 +108,9 @@ size_t	Datagram::recv(int fd, struct sockaddr *from, socklen_t* from_len) {
 	size_t got_bytes;
 
 	got_bytes = Recv::recvall(fd, datagram_.get(), datagram_max_size_, from, from_len);
-	header_.deserialize(datagram_.get());
+	if (got_bytes) {
+		header_.deserialize(datagram_.get());
+		content_size_ = got_bytes - header_.size();
+	}
 	return got_bytes;
 }
