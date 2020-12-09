@@ -2,16 +2,15 @@
 
 using namespace	std;
 
-size_t	Recv::recving(const Socket& sock, void *buf, size_t len) {
-	const struct addrinfo	*info = sock.getSocketInfo();
+size_t	Recv::recving(Socket& sock, void *buf, size_t len) {
+	struct addrinfo	*info = sock.getAddrInfo();
 	int										fd = sock.getSocketFd();
 	size_t								got;
 	int										size;
 
 	got = 0;
 	while (got < len) {
-		size = recvfrom(fd, buf, len - got, 0, info->ai_addr,
-									(socklen_t*)&info->ai_addrlen);
+		size = recvfrom(fd, buf, len - got, 0, info->ai_addr, &info->ai_addrlen);
 		if (errno == EWOULDBLOCK)
 			break;
 		if (size < 0)

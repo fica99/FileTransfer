@@ -24,12 +24,14 @@ static void	serverLoop(const char *serv_port) {
 	Socket				sock(AddrInfo("0.0.0.0", serv_port, SOCK_DGRAM));
 	vector<File>	files;
 
-	LOG_INFO(1, "Create listen socket: port - %s\n", serv_port);
+	LOG_INFO(1, "Server: Create listen socket: port - %s\n", serv_port);
 	Bind::binding(sock);
-	LOG_INFO(1, "Bind listen socket%s", "\n");
+	LOG_INFO(1, "Server: Bind listen socket%s", "\n");
 	while (true) {
-		Datagram datagram = getDatagram(sock);
-		addDatagram(files, datagram);
+		auto datagram = getDatagram(sock);
+		auto file = addDatagram(files, datagram);
+		auto confirmation = confirmDatagram(file, datagram);
+		sendDatagram(sock, move(confirmation));
 	}
 }
 

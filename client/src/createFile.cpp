@@ -30,6 +30,6 @@ File			createFile(const string& filename) {
 		datagram.setHeader(header);
 		++header.seq_number;
 	}
-	LOG_INFO(1, "Read file %s, number_of_datagrams - %ld\n", filename.c_str(), file.getDatagrams().size());
+	LOG_INFO(1, "Client: Read file %s, number_of_datagrams - %ld, content_size - %ld\n", filename.c_str(), file.getDatagrams().size(), file.getContentSize());
 	return file;
 }

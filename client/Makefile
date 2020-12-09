@@ -6,7 +6,7 @@
 #    By: aashara- <aashara-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/14 12:47:29 by aashara           #+#    #+#              #
-#    Updated: 2020/12/08 14:37:35 by aashara-         ###   ########.fr        #
+#    Updated: 2020/12/09 14:43:29 by aashara-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJ_DIR	=		objs
 LIB_DIR =		../lib
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
-SRC_FLS	= createFiles.cpp\
+SRC_FLS	= createFile.cpp\
 					main.cpp\
 					sendDatagram.cpp\
 					sendFiles.cpp\

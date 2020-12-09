@@ -2,8 +2,8 @@
 
 using namespace	std;
 
-size_t	Send::sending(const Socket& sock, const void *msg, size_t len) {
-	const struct addrinfo	*info = sock.getSocketInfo();
+size_t	Send::sending(Socket& sock, const void *msg, size_t len) {
+	struct addrinfo	*info = sock.getAddrInfo();
 	int										fd = sock.getSocketFd();
 	size_t								sended;
 	int										size;

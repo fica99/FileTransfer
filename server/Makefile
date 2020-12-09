@@ -6,7 +6,7 @@
 #    By: aashara- <aashara-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/14 12:47:29 by aashara           #+#    #+#              #
-#    Updated: 2020/12/08 23:25:50 by aashara-         ###   ########.fr        #
+#    Updated: 2020/12/09 14:06:05 by aashara-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,11 @@ OBJ_DIR	=		objs
 LIB_DIR =		../lib
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
-SRC_FLS	= datagramHandle.cpp\
+SRC_FLS	= addDatagram.cpp\
+					confirmDatagram.cpp\
+					getDatagram.cpp\
 					main.cpp\
-					setDatagram.cpp
+					sendDatagram.cpp\
 
 
 # ------------  LIBNETWORK  ------------------------------------------------- #

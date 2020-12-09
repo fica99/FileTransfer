@@ -42,24 +42,8 @@ void	Socket::setTimeout(time_t seconds, suseconds_t microseconds) const {
 		ERROR("Failed to set timeout");
 }
 
-const struct addrinfo *Socket::getSocketInfo(void) const {
+struct addrinfo *Socket::getAddrInfo(void) {
 	return info_;
-}
-
-Socket::Socket(Socket&& other) : addr_info_ (move(other.addr_info_)),
-																socket_fd_(other.socket_fd_),
-																info_(move(other.info_)) {
-	other.info_ = nullptr;
-}
-
-Socket& Socket::operator=(Socket&& other) {
-	if (&other == this)
-			return *this;
-	addr_info_ = move(other.addr_info_);
-	socket_fd_ = other.socket_fd_;
-	info_ = move(other.info_);
-	other.info_ = nullptr;
-	return *this;
 }
 
 void	Socket::closeSocket(void) {

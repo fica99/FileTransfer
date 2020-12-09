@@ -59,3 +59,23 @@ size_t	Datagram::getContentSize() const {
 size_t	Datagram::getContentMaxSize() const {
 	return datagram_max_size_ - header_.size();
 }
+
+bool		Datagram::operator==(const Datagram& other) const {
+	if (make_tuple(header_, datagram_max_size_, content_size_)
+	== make_tuple(other.header_, other.datagram_max_size_, other.content_size_))
+		if (!memcmp(datagram_.get(), other.datagram_.get(), content_size_))
+			return true;
+	return false;
+}
+
+size_t	Datagram::send(Socket& sock) const {
+	return Send::sending(sock, datagram_.get(), getDatagramSize());
+}
+
+size_t	Datagram::recv(Socket& sock) {
+	size_t got_bytes;
+
+	got_bytes = Recv::recving(sock, datagram_.get(), datagram_max_size_);
+	header_.deserialize(datagram_.get());
+	return got_bytes;
+}

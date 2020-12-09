@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include "File.h"
 
 /* CRC-32C (iSCSI) polynomial in reversed bit order. */
 #define POLY 0x82f63b78
@@ -11,6 +12,7 @@
 
 class CRC {
 public:
-	static uint32_t crc32c(uint32_t crc,
+	static uint32_t	crc32c(uint32_t crc,
 					const std::byte *buf, size_t len);
+	static uint32_t	crc32c(uint32_t crc, const File& file);
 };

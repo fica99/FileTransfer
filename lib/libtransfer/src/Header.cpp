@@ -22,3 +22,11 @@ byte	*Header::deserialize(byte *buff) {
 	memcpy(id, end, sizeof(id));
 	return end + sizeof(id);
 }
+
+bool		Header::operator==(const Header& other) const {
+	if (make_tuple(seq_number, seq_total, type) ==
+			make_tuple(other.seq_number, other.seq_total, other.type))
+		if (!memcmp(id, other.id, sizeof(id)))
+			return true;
+	return false;
+}

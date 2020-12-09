@@ -20,6 +20,7 @@
 #include "LogInfo.h"
 #include "Send.h"
 #include "Recv.h"
+#include "Deserialize.h"
 
 #define DATAGRAM_SIZE 1472
 #define RECV_TIMEOUT_SEC 0
@@ -29,16 +30,17 @@
 
 
 /*
-**									createFiles.cpp
+**									createFile.cpp
 */
 File								createFile(const std::string& filename);
+/*
+**									sendDatagram.cpp
+*/
+void								sendDatagram(Socket& sock,
+													const Datagram& datagram);
 /*
 **									sendFiles.cpp
 */
 void								sendFiles(const char *ip, const char *serv_port,
 										std::vector<std::string> filenames);
-/*
-**									sendDatagram.cpp
-*/
-void								sendDatagram(const Socket& sock,
-													const Datagram& datagram);
+
