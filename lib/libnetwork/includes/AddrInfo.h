@@ -9,7 +9,6 @@
 #include <cstring>
 #include <string>
 #include "Error.h"
-#define MAX_PORT_LENGTH 5
 
 class AddrInfo {
 public:

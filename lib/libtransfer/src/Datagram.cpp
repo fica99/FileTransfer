@@ -59,7 +59,7 @@ size_t				sendDatagram(int fd, const Datagram& datagram,
 					datagram.getDatagramSize(), dest_addr, dest_len);
 }
 
-size_t	recvDatagram(int fd, Datagram& datagram,
+size_t				recvDatagram(int fd, Datagram& datagram,
 				struct sockaddr *from, socklen_t* from_len) {
 	size_t	got_bytes;
 	size_t	datagram_max_size = datagram.getDatagramMaxSize();

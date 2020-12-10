@@ -24,4 +24,4 @@ private:
 	datagrams						data_;
 };
 
-uint32_t	crc32cFile(uint32_t crc, const File& file);
+uint32_t							crc32cFile(uint32_t crc, const File& file);
