@@ -6,6 +6,11 @@ Socket::Socket(int domain, int type, int protocol) {
 		ERROR("Failed to get socket file descriptor");
 }
 
+Socket::Socket(Socket&& other) {
+	socket_fd_ = other.socket_fd_;
+	other.socket_fd_ = 0;
+}
+
 int	Socket::getSocketFd(void) const {
 	return socket_fd_;
 }

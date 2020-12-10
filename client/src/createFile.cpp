@@ -18,8 +18,8 @@ static const byte	*getId(void) {
 }
 
 File			createFile(const string& filename) {
-	File		file(filename, DATAGRAM_SIZE);
 	Header	header;
+	File		file(filename, DATAGRAM_SIZE, header);
 
 	auto& datagrams = file.getDatagrams();
 	memcpy(header.id, getId(), sizeof(header.id));
@@ -30,6 +30,6 @@ File			createFile(const string& filename) {
 		datagram.setHeader(header);
 		++header.seq_number;
 	}
-	LOG_INFO(1, "Client: Read file %s, number_of_datagrams - %ld, content_size - %ld\n", filename.c_str(), file.getDatagrams().size(), file.getContentSize());
+	LOG_INFO(1, "Client: Read file %s, number_of_datagrams - %ld, content_size - %ld, check_sum - %u\n", filename.c_str(), file.getDatagrams().size(), file.getContentSize(), crc32cFile(0, file));
 	return file;
 }

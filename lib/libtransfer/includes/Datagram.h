@@ -13,27 +13,39 @@ using bytes = std::shared_ptr<std::byte>;
 class Datagram {
 public:
 	Datagram(size_t	datagram_max_size);
-	Datagram(const Datagram& other);
-	Datagram(Datagram&& other);
-	Datagram&				operator=(const Datagram& other);
-	Datagram&				operator=(Datagram&& other);
-	void						setContent(const char *content, size_t content_size);
-	void						setContent(const std::byte *content, size_t content_size);
-	void						setHeader(Header header);
-	const Header&		getHeader(void) const;
+	void						setHeader(const Header& header);
+	template <typename T>
+	void						setContent(const T *content, size_t content_size);
+	Header					getHeader(void) const;
 	const bytes&		getDatagram(void) const;
 	size_t					getDatagramSize(void) const;
+	size_t					getDatagramMaxSize(void) const;
 	const std::byte	*getContent(void) const;
 	size_t					getContentSize(void) const;
 	size_t					getContentMaxSize(void) const;
 	bool						operator==(const Datagram& other) const;
-	size_t					send(int fd, const struct sockaddr *dest_addr,
-													socklen_t dest_len) const;
-	size_t					recv(int fd, struct sockaddr *from,
-													socklen_t* from_len);
 private:
-	Header					header_;
+	size_t					header_size_;
 	size_t					datagram_max_size_;
 	size_t					content_size_;
 	bytes						datagram_;
 };
+
+template <typename T>
+void	Datagram::setContent(const T *content, size_t content_size) {
+	size_t		content_max_size = getContentMaxSize();
+	std::byte	*buff = datagram_.get();
+
+	while (content_size_ < content_max_size &&
+							content_size_ < content_size) {
+		buff[header_size_ + content_size_] =
+					static_cast<std::byte>(content[content_size_]);
+		++content_size_;
+	}
+}
+
+
+size_t	sendDatagram(int fd, const Datagram& datagram,
+				const struct sockaddr *dest_addr, socklen_t dest_len);
+size_t	recvDatagram(int fd, Datagram& datagram,
+				struct sockaddr *from, socklen_t* from_len);

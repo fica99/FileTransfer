@@ -9,6 +9,8 @@
 class Socket {
 public:
 	Socket(int domain, int type, int protocol);
+	Socket(const Socket& other) = delete;
+	Socket(Socket&& other);
 	~Socket();
 	int										getSocketFd(void) const;
 	void									closeSocket(void);

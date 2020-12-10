@@ -2,32 +2,22 @@
 
 using namespace	std;
 
-File::File(const string& filename, size_t datagram_size)
+File::File(const string& filename, size_t datagram_size, const Header& header)
 							: filename_(filename) {
 	ifstream	file(filename);
-	char			buff[datagram_size + 1];
+	char			buff[datagram_size];
 
 	if (!file)
 		throw invalid_argument(filename + " does not exist");
 	while (!file.eof()) {
 		Datagram	datagram(datagram_size);
 
+		datagram.setHeader(header);
 		file.read(buff, datagram.getContentMaxSize());
-		datagram.setContent(buff, file.gcount());
+		datagram.setContent<char>(buff, file.gcount());
 		data_.push_back(move(datagram));
 	}
 }
-
-File::File(File&& other) : filename_(move(other.filename_)),
-														data_(move(other.data_)) {
-}
-
-File&	File::operator=(File&& other) {
-	filename_ = move(other.filename_);
-	data_ = move(other.data_);
-	return *this;
-}
-
 
 datagrams&	File::getDatagrams(void) {
 	return data_;
@@ -56,10 +46,10 @@ void			File::getContent(byte *buff) const {
 }
 
 
-uint32_t	File::crc32c(uint32_t crc) const {
-	size_t	content_size = getContentSize();
+uint32_t	crc32cFile(uint32_t crc, const File& file) {
+	size_t	content_size = file.getContentSize();
 	byte		buff[content_size];
 
-	getContent(buff);
+	file.getContent(buff);
 	return CRC::crc32c(crc, buff, content_size);
 }
