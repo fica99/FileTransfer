@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: aashara- <aashara-@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/06/14 13:42:05 by aashara           #+#    #+#              #
-#    Updated: 2020/12/07 13:38:28 by aashara-         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 client := client
 
 server := server
@@ -17,6 +5,13 @@ server := server
 .PHONY: all $(client) $(server) clean fclean re
 
 all: $(client) $(server)
+
+run_client: all
+	./FileClient -i 0.0.0.0 -p 2222 -f $(client) $(server)
+
+run_server: all
+	./FileServer -p 2222
+
 
 $(client):
 	$(MAKE) all --no-print-directory -C $(client)
