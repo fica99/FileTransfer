@@ -25,6 +25,7 @@ static void	serverLoop(Socket sock) {
 	socklen_t				from_len;
 	vector<File>		files;
 
+	LOG_INFO(1, "Server: start ...%s", "\n");
 	while (true) {
 		Datagram datagram = getDatagram(sock.getSocketFd(), &from, &from_len);
 		auto& file = addDatagram(files, datagram);
@@ -42,6 +43,7 @@ static Socket	createSocket(const char *serv_port) {
 						);
 
 	sock.binding(struct_info->ai_addr, struct_info->ai_addrlen);
+	sock.setTimeout(8, 0);
 	return sock;
 }
 
